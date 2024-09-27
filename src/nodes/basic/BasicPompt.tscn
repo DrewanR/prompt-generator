@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bpv42aj8djda8"]
+
+[node name="POMPT" type="Label"]
+autowrap_mode = 3

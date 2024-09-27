@@ -1,0 +1,116 @@
+[gd_scene load_steps=4 format=3 uid="uid://72oekpu7l6s4"]
+
+[ext_resource type="Theme" uid="uid://d3luorjfv7eg" path="res://themes/basic/basic_theme.tres" id="1_qurlb"]
+[ext_resource type="Script" path="res://src/nodes/basic/basic_main_scene.gd" id="2_psuuc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nt28d"]
+bg_color = Color(0, 0, 0, 0.25098)
+
+[node name="BasicTheme" type="Control" node_paths=PackedStringArray("prompt_container_node", "seed_text_box", "quantity_selecter", "quantity_readout", "global_seed_readout", "scroll_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qurlb")
+script = ExtResource("2_psuuc")
+prompt_container_node = NodePath("VBoxContainer/ScrollContainer/PROMPT CONTAINER")
+seed_text_box = NodePath("VBoxContainer/PanelContainer/MarginContainer/HFlowContainer/SeedTextBox")
+quantity_selecter = NodePath("VBoxContainer/PanelContainer/MarginContainer/HFlowContainer/HSlider")
+quantity_readout = NodePath("VBoxContainer/PanelContainer/MarginContainer/HFlowContainer/QuantityReadout")
+global_seed_readout = NodePath("VBoxContainer/PanelContainer/MarginContainer/HFlowContainer/GlobalSeed")
+scroll_container = NodePath("VBoxContainer/ScrollContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nt28d")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer/PanelContainer/MarginContainer" node_paths=PackedStringArray("shortcut_context")]
+layout_mode = 2
+shortcut_context = NodePath(".")
+
+[node name="SeedLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Seed:"
+vertical_alignment = 1
+
+[node name="SeedTextBox" type="LineEdit" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+tooltip_text = "Enter name here. This is used as the seed so re-entering a name will result in the same prompt set, presuming the same global seed is in use."
+placeholder_text = "Enter Name Here"
+expand_to_text_length = true
+select_all_on_focus = true
+
+[node name="Enter" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer" node_paths=PackedStringArray("shortcut_context")]
+layout_mode = 2
+shortcut_context = NodePath("..")
+text = ">"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="QuantityLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+text = "Prompt Quantity"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+min_value = 1.0
+max_value = 25.0
+value = 1.0
+exp_edit = true
+ticks_on_borders = true
+
+[node name="QuantityReadout" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+text = "3"
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="Shitty Gap Filler lol" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Shitty Gap Filler lol2" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator3" type="VSeparator" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="GlobalSeed" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+text = "Global Seed: 1545252"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PROMPT CONTAINER" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer/Enter" to="." method="_on_enter_pressed"]
+[connection signal="value_changed" from="VBoxContainer/PanelContainer/MarginContainer/HFlowContainer/HSlider" to="." method="_on_h_slider_value_changed"]

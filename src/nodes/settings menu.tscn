@@ -1,0 +1,147 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6gsx0vfhk8g7"]
+
+[ext_resource type="Theme" uid="uid://snhmrft2qdlg" path="res://themes/basic/bw_command_line.tres" id="1_n8qwd"]
+[ext_resource type="Script" path="res://src/nodes/settings_menu.gd" id="2_atpap"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_n8qwd")
+script = ExtResource("2_atpap")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="GlobalSeed" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GlobalSeed"]
+layout_mode = 2
+text = "Global Seed: "
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/GlobalSeed"]
+custom_minimum_size = Vector2(164, 0)
+layout_mode = 2
+tooltip_text = "An offset applied to all unique seeds to allow for reuse of same prompt list across different days with different results.
+When in doubt, leave blank or use the current numerical date."
+allow_greater = true
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/GlobalSeed"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Prompt Selector v0.1"
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="PromptFileAdress" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Prompt File: "
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
+custom_minimum_size = Vector2(500, 35)
+layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "The file adress of the text file containing the list of possible prompts.
+Click \"File Explorer\" for the file explorer dialog."
+text = "res://prompt lists/tests/nyah.txt"
+placeholder_text = "Enter file adress here"
+
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(1600, 900)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 0
+text = "File Explorer"
+
+[node name="InfoLabels" type="Label" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "File Name: 
+Prompt Count: 
+Average Prompt Length: 
+Last Modified: 
+"
+horizontal_alignment = 2
+
+[node name="Info" type="Label" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
+layout_mode = 2
+text = " nyah.txt
+ 7
+ idk words
+ at some point
+"
+horizontal_alignment = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="Theme" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Theme"]
+layout_mode = 2
+text = "Theme: "
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/Theme"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 40
+text = "Begin"
+
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/PromptFileAdress/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="confirmed" from="MarginContainer/VBoxContainer/PromptFileAdress/FileDialog" to="." method="_on_file_dialog_confirmed"]
+[connection signal="pressed" from="MarginContainer/Button" to="." method="_on_button_pressed"]

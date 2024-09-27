@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck0dcxp4ps80m"]
+
+[ext_resource type="Script" path="res://src/nodes/basic/basic_prompt_set.gd" id="1_df7ph"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3k6bb"]
+font_size = 32
+
+[node name="MarginContainer" type="MarginContainer" node_paths=PackedStringArray("prompt_container_node", "seed_node")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+script = ExtResource("1_df7ph")
+prompt_container_node = NodePath("PanelContainer/MarginContainer/VBoxContainer/PROMPTS")
+seed_node = NodePath("PanelContainer/MarginContainer/VBoxContainer/SEED")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SEED" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Seed
+"
+label_settings = SubResource("LabelSettings_3k6bb")
+horizontal_alignment = 2
+
+[node name="PROMPTS" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 2

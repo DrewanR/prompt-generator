@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d3luorjfv7eg"]
+
+[ext_resource type="FontFile" uid="uid://l7ro6uoj2qhr" path="res://assets/fonts/Roboto_Regular.ttf" id="1_jhmu6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qjng"]
+bg_color = Color(0, 0, 0, 0.25098)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[resource]
+default_base_scale = 2.0
+default_font = ExtResource("1_jhmu6")
+default_font_size = 24
+Label/fonts/font = ExtResource("1_jhmu6")
+TextEdit/styles/normal = SubResource("StyleBoxFlat_4qjng")
