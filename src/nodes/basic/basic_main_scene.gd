@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 	if bottom_sticky:
 		scroll_container.scroll_vertical = 1000000
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("enter"):
 		_on_enter_pressed()
 
 func spawn_prompt_Set(seed, prompts) -> void:

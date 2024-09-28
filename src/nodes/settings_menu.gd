@@ -55,8 +55,8 @@ func update_prompt_info() -> void:
 		prompt_file_adress_label.text = prompt_file_info_labels
 		prompt_file_adress_info.visible = true
 		prompt_file_adress_info.text  = " " + prompt_file_adress.split("/")[-1]
-		prompt_file_adress_info.text += "\n " + str(number_of_lines) + " L"
-		prompt_file_adress_info.text += "\n " + str(len(file_content.split(" "))/number_of_lines) + " W"
+		prompt_file_adress_info.text += "\n " + str(number_of_lines-1)
+		prompt_file_adress_info.text += "\n " + str(len(file_content.split(" "))/number_of_lines-1)
 		
 		var time_dict = Time.get_datetime_dict_from_unix_time(FileAccess.get_modified_time(prompt_file_adress))
 		prompt_file_adress_info.text += "\n " + str(time_dict["day"]) + "/" + str(time_dict["month"]) + "/" + str(time_dict["year"])
