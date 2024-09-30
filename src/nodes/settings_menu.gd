@@ -7,8 +7,8 @@ Last Modified:"""
 const begin_texts = ["Begin","Begin","Activate","Accept","Activate","Start","Start","Nyah","Press to begin","Except","Get to the hecking prompts","trats","CLICK ME!","Meow","Begin²"]
 
 @export var theme_scenes :Array[Array]=[
-	["Test Theme", "res://src/nodes/basic/basic_main_scene.tscn"],
-	["Basic Commandlike", "res://src/nodes/basicCommandLine/commandline_main_scene.tscn"]
+	["Test Theme", "res://src/nodes/basic/basic_main_scene.tscn",""],
+	["Basic Commandlike", "res://src/nodes/basicCommandLine/commandline_main_scene.tscn",'Colour = #000000;\nTitle = ""']
 ]
 
 @onready var global_seed_box := $MarginContainer/VBoxContainer/GlobalSeed/SpinBox
@@ -20,6 +20,9 @@ const begin_texts = ["Begin","Begin","Activate","Accept","Activate","Start","Sta
 @onready var prompt_file_adress_search_button := $MarginContainer/VBoxContainer/PromptFileAdress/Button
 @onready var prompt_file_adress_info          := $MarginContainer/VBoxContainer/PromptFileAdress/Info
 @onready var prompt_file_adress_label         := $MarginContainer/VBoxContainer/PromptFileAdress/InfoLabels
+
+@onready var theme_parameters_container := $MarginContainer/VBoxContainer/ThemeParams
+@onready var theme_patameters_text_edit := $MarginContainer/VBoxContainer/ThemeParams/TextEdit
 
 @onready var accept_button := $MarginContainer/Button
 
@@ -38,6 +41,7 @@ func start() -> void:
 	var file_content = load_file()
 	PromptGenerator.prompts = file_content.split("\n")
 	PromptGenerator.remove_empty_elements()
+	PromptGenerator.set_theme_params(theme_patameters_text_edit.text)
 	get_tree().change_scene_to_file(theme_scenes[theme_dropdown.selected][1])
 
 func update_theme_select() -> void:
@@ -70,12 +74,21 @@ func load_file():
 	else:
 		return null
 
-func _on_file_dialog_confirmed() -> void:
-	pass # Replace with function body.
-
 func _on_line_edit_text_changed(new_text: String) -> void:
 	prompt_file_adress = new_text
 	update_prompt_info()
 
 func _on_button_pressed() -> void:
 	start()
+
+func _on_file_button_pressed() -> void:
+	prompt_file_adress_filedialogue.visible = true
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	prompt_file_adress_line_edit.text = path
+	prompt_file_adress = path
+	update_prompt_info()
+
+func _on_option_button_item_selected(index: int) -> void:
+	theme_parameters_container.visible = not ((len(theme_scenes[index]) == 0) or (theme_scenes[index][2] == ""))
+	theme_patameters_text_edit.text = theme_scenes[index][2]

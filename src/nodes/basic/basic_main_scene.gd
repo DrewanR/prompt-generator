@@ -10,6 +10,8 @@ var bottom_sticky = true
 @export var quantity_readout :Node
 @export var global_seed_readout :Node
 @export var scroll_container :Node
+@export var title_label :Node
+@export var background_rect :Node
 @export var dim_previous_promptsets := false
 
 func _ready() -> void:
@@ -17,6 +19,7 @@ func _ready() -> void:
 		quantity_selecter.max_value = len(PromptGenerator.prompts)
 		quantity_selecter.value = 3
 	global_seed_readout.text = "Global seed: " + str(PromptGenerator.global_seed)
+	update_theme_params(PromptGenerator.theme_parameters)
 
 func _process(delta: float) -> void:
 	if bottom_sticky:
@@ -37,6 +40,12 @@ func spawn_prompt_Set(seed, prompts) -> void:
 
 func generate_prompts() -> Array:
 	return PromptGenerator.get_prompt_set(quantity_selecter.value, seed_text_box.text)
+
+func update_theme_params(params :Dictionary) -> void:
+	if params.has("Title"):
+		title_label.text = " " + params["Title"]
+	if params.has("Colour"):
+		background_rect.color = params["Colour"]
 
 func _on_enter_pressed() -> void:
 	spawn_prompt_Set(seed_text_box.text, generate_prompts())

@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6gsx0vfhk8g7"]
+[gd_scene load_steps=4 format=3 uid="uid://b6gsx0vfhk8g7"]
 
 [ext_resource type="Theme" uid="uid://snhmrft2qdlg" path="res://themes/basic/bw_command_line.tres" id="1_n8qwd"]
 [ext_resource type="Script" path="res://src/nodes/settings_menu.gd" id="2_atpap"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_l2wrj"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -79,16 +81,15 @@ tooltip_text = "The file adress of the text file containing the list of possible
 Click \"File Explorer\" for the file explorer dialog."
 text = "res://prompt lists/tests/nyah.txt"
 placeholder_text = "Enter file adress here"
+expand_to_text_length = true
 
 [node name="FileDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
 title = "Open a File"
 initial_position = 1
 size = Vector2i(1600, 900)
+theme = ExtResource("1_n8qwd")
 ok_button_text = "Open"
-dialog_hide_on_ok = true
 file_mode = 0
-access = 2
-use_native_dialog = true
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/PromptFileAdress"]
 custom_minimum_size = Vector2(0, 35)
@@ -130,10 +131,35 @@ text = "Theme: "
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_l2wrj")
+
+[node name="ThemeParams" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ThemeParams"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Parameters: "
+vertical_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/ThemeParams"]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/background_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 0.501961)
+placeholder_text = "Parameters will appear here!"
+
 [node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
+theme_override_constants/separation = 7
 
 [node name="Button" type="Button" parent="MarginContainer"]
 layout_mode = 2
@@ -143,5 +169,7 @@ theme_override_font_sizes/font_size = 40
 text = "Begin"
 
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/PromptFileAdress/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="confirmed" from="MarginContainer/VBoxContainer/PromptFileAdress/FileDialog" to="." method="_on_file_dialog_confirmed"]
+[connection signal="file_selected" from="MarginContainer/VBoxContainer/PromptFileAdress/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PromptFileAdress/Button" to="." method="_on_file_button_pressed"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/Theme/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="pressed" from="MarginContainer/Button" to="." method="_on_button_pressed"]

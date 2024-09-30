@@ -51,7 +51,7 @@ _data = {
 "onload": SubResource("Animation_mb7ub")
 }
 
-[node name="BasicTheme" type="Control" node_paths=PackedStringArray("prompt_container_node", "seed_text_box", "quantity_selecter", "global_seed_readout", "scroll_container")]
+[node name="BasicTheme" type="Control" node_paths=PackedStringArray("prompt_container_node", "seed_text_box", "quantity_selecter", "global_seed_readout", "scroll_container", "title_label", "background_rect")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,6 +66,8 @@ seed_text_box = NodePath("MarginContainer/VBoxContainer/MarginContainer/HFlowCon
 quantity_selecter = NodePath("MarginContainer/VBoxContainer/MarginContainer/HFlowContainer/SpinBox")
 global_seed_readout = NodePath("MarginContainer/VBoxContainer/MarginContainer/HFlowContainer/GlobalSeed")
 scroll_container = NodePath("MarginContainer/VBoxContainer/ScrollContainer")
+title_label = NodePath("MarginContainer/VBoxContainer/MarginContainer/HFlowContainer/title")
+background_rect = NodePath("ColorRect")
 dim_previous_promptsets = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -137,6 +139,13 @@ size_flags_horizontal = 3
 [node name="GlobalSeed" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HFlowContainer"]
 layout_mode = 2
 text = "Global Seed: 1545252"
+
+[node name="title" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HFlowContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.210653, 0.560726, 0.627519, 1)
+theme_override_colors/font_outline_color = Color(0.211765, 0.560784, 0.627451, 1)
+theme_override_constants/outline_size = 3
+text = " Creature"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
